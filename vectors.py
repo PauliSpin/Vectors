@@ -74,6 +74,11 @@ A = Arrow(vec_A, 'a', col_A, pos_A)
 
 # Define vector B
 vec_B = vp.vector(2, 1, 3)
-pos_B = vp.vector(0.5, 0.5, 0.5)
+pos_B = pos_A + vec_A  # vp.vector(0.5, 0.5, 0.5)
 col_B = vp.color.orange
 A = Arrow(vec_B, 'a', col_B, pos_B)
+
+vec_C = vec_A + vec_B
+pos_C = pos_A
+col_C = vp.color.yellow
+C = Arrow(vec_C, 'a', col_C, pos_C)
