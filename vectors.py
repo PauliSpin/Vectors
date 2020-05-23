@@ -43,6 +43,8 @@ class Arrow(object):
             self.axis_text = vp.label(text=axis_label, pos=arrow_pos +
                                       0.5 * self.vec_u, color=axis_color, xoffset=3, yoffset=3, box=False)
 
+        self.axis_text.height = 0.6 * self.axis_text.height
+
 
 # Initialize
 vec_o = vp.vector(0, 0, 0)
