@@ -36,12 +36,12 @@ class Arrow(object):
         # of the axis line
         self.cone_tip = self.vec_u + arrow_pos + 0.1 * vp.norm(self.vec_u)
 
-        # if axis_label in 'xyz':
-        #     self.axis_text = vp.label(text=axis_label, pos=self.cone.pos +
-        #   0.1 * self.vec_u, color=axis_color, xoffset=3, yoffset=3, box=False)
-
-        self.axis_text = vp.label(text=axis_label, pos=self.cone.pos + 0.1 *
-                                  self.vec_u, color=axis_color, xoffset=3, yoffset=3, box=False)
+        if axis_label in 'xyz':
+            self.axis_text = vp.label(text=axis_label, pos=self.cone.pos +
+                                      0.1 * self.vec_u, color=axis_color, xoffset=3, yoffset=3, box=False)
+        else:
+            self.axis_text = vp.label(text=axis_label, pos=arrow_pos +
+                                      0.5 * self.vec_u, color=axis_color, xoffset=3, yoffset=3, box=False)
 
 
 # Initialize
