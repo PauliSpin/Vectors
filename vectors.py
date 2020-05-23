@@ -36,9 +36,12 @@ class Arrow(object):
         # of the axis line
         self.cone_tip = self.vec_u + arrow_pos + 0.1 * vp.norm(self.vec_u)
 
-        if axis_label in 'xyz':
-            self.axis_text = vp.label(text=axis_label, pos=self.cone.pos +
-                                      0.1 * self.vec_u, color=axis_color, xoffset=3, yoffset=3, box=False)
+        # if axis_label in 'xyz':
+        #     self.axis_text = vp.label(text=axis_label, pos=self.cone.pos +
+        #   0.1 * self.vec_u, color=axis_color, xoffset=3, yoffset=3, box=False)
+
+        self.axis_text = vp.label(text=axis_label, pos=self.cone.pos + 0.1 *
+                                  self.vec_u, color=axis_color, xoffset=3, yoffset=3, box=False)
 
 
 # Initialize
@@ -70,15 +73,15 @@ z_axis_line = vp.curve(z_axis.cone_tip, 3 * vec_k,
 vec_A = vp.vector(1, 2, 1)
 pos_A = vp.vector(0.5, 0.5, 0.5)
 col_A = vp.color.magenta
-A = Arrow(vec_A, 'a', col_A, pos_A)
+A = Arrow(vec_A, 'A(1, 2, 1)', col_A, pos_A)
 
 # Define vector B
 vec_B = vp.vector(2, 1, 3)
 pos_B = pos_A + vec_A  # vp.vector(0.5, 0.5, 0.5)
 col_B = vp.color.orange
-A = Arrow(vec_B, 'a', col_B, pos_B)
+A = Arrow(vec_B, 'B(2, 1, 3)', col_B, pos_B)
 
 vec_C = vec_A + vec_B
 pos_C = pos_A
-col_C = vp.color.yellow
-C = Arrow(vec_C, 'a', col_C, pos_C)
+col_C = vp.color.purple
+C = Arrow(vec_C, f'C({vec_C.x}, {vec_C.y}, {vec_C.z})', col_C, pos_C)
