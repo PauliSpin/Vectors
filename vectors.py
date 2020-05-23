@@ -1,6 +1,9 @@
 import vpython as vp
 import math
 
+# pip install Vpython
+# https://www.glowscript.org/docs/VPythonDocs/index.html
+
 
 class Arrow(object):
 
@@ -25,13 +28,13 @@ class Arrow(object):
         self.rod = vp.cylinder(pos=arrow_pos, axis=self.vec_u,
                                radius=self.rod_radius, color=axis_color)
 
-        self.cone = vp.cone(pos=self.vec_u+arrow_pos, axis=0.1 * self.vec_u,
+        self.cone = vp.cone(pos=self.vec_u+arrow_pos, axis=0.1 * vp.norm(self.vec_u),
                             radius=self.cone_radius, color=axis_color)
 
         # Note where the tip of the cone is,
         # which will define the starting point of
         # of the axis line
-        self.cone_tip = self.vec_u + arrow_pos + 0.1 * self.vec_u
+        self.cone_tip = self.vec_u + arrow_pos + 0.1 * vp.norm(self.vec_u)
 
         if axis_label in 'xyz':
             self.axis_text = vp.label(text=axis_label, pos=self.cone.pos +
@@ -68,3 +71,9 @@ vec_A = vp.vector(1, 2, 1)
 pos_A = vp.vector(0.5, 0.5, 0.5)
 col_A = vp.color.magenta
 A = Arrow(vec_A, 'a', col_A, pos_A)
+
+# Define vector B
+vec_B = vp.vector(2, 1, 3)
+pos_B = vp.vector(0.5, 0.5, 0.5)
+col_B = vp.color.orange
+A = Arrow(vec_B, 'a', col_B, pos_B)
