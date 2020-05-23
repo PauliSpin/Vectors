@@ -25,10 +25,18 @@ class Arrow(object):
             self.rod_radius = 0.02
             self.cone_radius = 0.06
 
-        self.rod = vp.cylinder(pos=arrow_pos, axis=self.vec_u,
+        # Reduced Rod length = Rod length - Cone's axial length
+        # Arrow length = Reduced Rod + Cone Axial Length
+        # Use a fixed size of axis of the cone
+        self.cone_axis = 0.1 * vp.norm(self.vec_u)
+
+        # Reduce the size of the rod by the axial size of the cone
+        self.rod = vp.cylinder(pos=arrow_pos, axis=self.vec_u - self.cone_axis,
                                radius=self.rod_radius, color=axis_color)
 
-        self.cone = vp.cone(pos=self.vec_u+arrow_pos, axis=0.1 * vp.norm(self.vec_u),
+        # Place the base of the cone at the end of rod
+        # which has been reduced by the cone's axial length
+        self.cone = vp.cone(pos=self.vec_u - self.cone_axis + arrow_pos, axis=self.cone_axis,
                             radius=self.cone_radius, color=axis_color)
 
         # Note where the tip of the cone is,
