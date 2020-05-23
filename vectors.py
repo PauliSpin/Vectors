@@ -9,6 +9,9 @@ class Arrow(object):
 
     def __init__(self, v, axis_label, axis_color, arrow_pos):
 
+        # If we are drawing the axis-triad arrows
+        # then set the vec_u 'unit vector' accordingley.
+        # This ignores v in the argument list.
         if axis_label == 'x':
             self.vec_u = vec_i  # Arrow.vec_i
         elif axis_label == 'y':
@@ -16,6 +19,8 @@ class Arrow(object):
         elif axis_label == 'z':
             self.vec_u = vec_k  # Arrow.vec_k
         else:
+            # Not drawing the axis triad
+            # so just set tvec_u to the vector itself
             self.vec_u = v
 
         if axis_label in 'xyz':
