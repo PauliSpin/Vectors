@@ -4,49 +4,67 @@ import math
 
 class Arrow(object):
 
-    vec_i = vp.vector(10, 0, 0)
-    vec_j = vp.vector(0, 10, 0)
-    vec_k = vp.vector(0, 0, 10)
+    def __init__(self, v, axis_label, axis_color, arrow_pos):
 
-    def __init__(self, v, arrow_label, arrow_color, arrow_pos):
-
-        if arrow_label == 'x':
-            vec_u = Arrow.vec_i
-        elif arrow_label == 'y':
-            vec_u = Arrow.vec_j
-        elif arrow_label == 'z':
-            vec_u = Arrow.vec_k
+        if axis_label == 'x':
+            self.vec_u = vec_i  # Arrow.vec_i
+        elif axis_label == 'y':
+            self.vec_u = vec_j  # Arrow.vec_j
+        elif axis_label == 'z':
+            self.vec_u = vec_k  # Arrow.vec_k
         else:
-            vec_u = vp.vector(v.x * Arrow.vec_i.x, v.y *
-                              Arrow.vec_j.y, v.z * Arrow.vec_k.z)
+            self.vec_u = v
 
-        self.rod_radius = vp.mag(vec_u) * 0.01
+        if axis_label in 'xyz':
+            self.rod_radius = vp.mag(self.vec_u) * 0.01
+            self.cone_radius = vp.mag(self.vec_u) * 0.03
+        else:
+            self.rod_radius = 0.02
+            self.cone_radius = 0.06
 
-        self.rod = vp.cylinder(pos=arrow_pos, axis=vec_u,
-                               radius=self.rod_radius, color=arrow_color)
-        self.cone = vp.cone(pos=vec_u, axis=0.1 * vec_u,
-                            radius=vp.mag(vec_u) * 0.03, color=arrow_color)
-        if arrow_label in 'xyz':
-            self.axis_text = vp.text(text=arrow_label, pos=self.cone.pos +
-                                     0.1 * vec_u, color=arrow_color)
+        self.rod = vp.cylinder(pos=arrow_pos, axis=self.vec_u,
+                               radius=self.rod_radius, color=axis_color)
+
+        self.cone = vp.cone(pos=self.vec_u+arrow_pos, axis=0.1 * self.vec_u,
+                            radius=self.cone_radius, color=axis_color)
+
+        # Note where the tip of the cone is,
+        # which will define the starting point of
+        # of the axis line
+        self.cone_tip = self.vec_u + arrow_pos + 0.1 * self.vec_u
+
+        if axis_label in 'xyz':
+            self.axis_text = vp.label(text=axis_label, pos=self.cone.pos +
+                                      0.1 * self.vec_u, color=axis_color, xoffset=3, yoffset=3, box=False)
 
 
-i = vp.vector(1, 0, 0)
-j = vp.vector(0, 1, 0)
-k = vp.vector(0, 0, 1)
-
+# Initialize
 vec_o = vp.vector(0, 0, 0)
-x_axis = Arrow(i, 'x', vp.color.red, vec_o)
-y_axis = Arrow(j, 'y', vp.color.cyan, vec_o)
-z_axis = Arrow(k, 'z', vp.color.green, vec_o)
+vec_i = vp.vector(1, 0, 0)
+vec_j = vp.vector(0, 1, 0)
+vec_k = vp.vector(0, 0, 1)
 
-v_pos = vp.vector(2, 2, 2)
-v = vp.vector(3, 4, 5)
+# Axis colours
+x_axis_color = vp.color.red
+y_axis_color = vp.color.cyan
+z_axis_color = vp.color.green
 
-my_v = Arrow(v, 'a', vp.color.magenta, v_pos)
+# Axes Triad
+x_axis = Arrow(vec_o, 'x', x_axis_color, vec_o)
+y_axis = Arrow(vec_o, 'y', y_axis_color, vec_o)
+z_axis = Arrow(vec_o, 'z', z_axis_color, vec_o)
 
-print(f'Camera Posn Vector = {vp.scene.camera.pos}')
-print(f'Camera Axis Vector = {vp.scene.camera.axis}')
+# Axes
+x_axis_line = vp.curve(x_axis.cone_tip, 3 * vec_i,
+                       radius=0.01, color=x_axis_color)
+y_axis_line = vp.curve(y_axis.cone_tip, 3 * vec_j,
+                       radius=0.01, color=y_axis_color)
+z_axis_line = vp.curve(z_axis.cone_tip, 3 * vec_k,
+                       radius=0.01, color=z_axis_color)
 
 
-vp.scene.camera.pos = vp.vector(10, 10, 7.3205)
+# Define vector A
+vec_A = vp.vector(1, 2, 1)
+pos_A = vp.vector(0.5, 0.5, 0.5)
+col_A = vp.color.magenta
+A = Arrow(vec_A, 'a', col_A, pos_A)
