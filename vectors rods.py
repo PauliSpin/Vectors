@@ -74,3 +74,5 @@ vec_C = vp.cross(vec_A, vec_B)
 pos_C = pos_A
 col_C = vp.color.purple
 C = Arrow(vec_C, f'AxB({vec_C.x}, {vec_C.y}, {vec_C.z})', 0.5, col_C, pos_C)
+
+#  vp.scene.camera.pos = vp.vector(-2, -3, 2)
